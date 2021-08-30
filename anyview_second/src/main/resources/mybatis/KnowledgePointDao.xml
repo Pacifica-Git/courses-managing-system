@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.linyuang.www.mapper.KnowledgePointDao">
+    <resultMap id="knowledgePoint" type="com.linyuang.www.po.KnowledgePoint">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="course" property="course"/>
+        <result column="chapter" property="chapter"/>
+        <result column="section" property="section"/>
+        <result column="definition" property="definition"/>
+        <result column="another_name" property="anotherName"/>
+        <result column="required_of_mastery" property="requiredOfMastery"/>
+        <result column="degree_of_difficulty" property="degreeOfDifficulty"/>
+        <result column="number_of_related_questions" property="numberOfRelatedQuestions"/>
+        <result column="remark" property="remark"/>
+    </resultMap>
+
+    <update id="updateKnowledgePoint" parameterType="com.linyuang.www.po.KnowledgePoint">
+        update user
+        <set>
+            <if test="name != null">
+                name=#{name},
+            </if>
+            <if test="course!= null">
+                course=#{course},
+            </if>
+            <if test="chapter!= null">
+                chapter=#{chapter},
+            </if>
+            <if test="section!= null">
+                section=#{section},
+            </if>
+            <if test="definition!= null">
+                definition=#{definition},
+            </if>
+            <if test="anotherName!= null">
+                another_name=#{anotherName},
+            </if>
+            <if test="requiredOfMastery != null">
+                required_of_mastery=#{requiredOfMastery},
+            </if>
+            <if test="degreeOfDifficulty!= null">
+                degree_of_difficulty=#{degreeOfDifficulty},
+            </if>
+            <if test="numberOfRelatedQuestions!= null">
+                number_of_related_questions=#{numberOfRelatedQuestions},
+            </if>
+            <if test="remark!= null">
+                remark=#{remark},
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <select id="showKnowledge" parameterType="com.linyuang.www.vo.QueryVo" resultMap="knowledgePoint">
+        select * from knowledge order by #{sortField} #{sortRule}
+    </select>
+
+    <select id="findAllKnowledgePoint" resultMap="knowledgePoint">
+        select * from knowledge_point
+    </select>
+
+    <select id="findKnowledgePointById" parameterType="java.lang.Integer" resultMap="knowledgePoint">
+        select * from knowledge_point where id = #{id}
+    </select>
+
+    <delete id="deleteKnowledgePoint" parameterType="java.lang.Integer">
+        delete from knowledge_point where id = #{id}
+    </delete>
+
+    <insert id="insertKnowledgePoint" parameterType="com.linyuang.www.po.KnowledgePoint">
+        insert into knowledge_point(name,course,chapter,section,definition,another_name,required_of_mastery,degree_of_difficulty,number_of_related_questions,remark)values (#{name},#{course},#{chapter},#{section},#{definition},#{anotherName},#{requiredOfMastery},#{degreeOfDifficulty},#{numberOfRelatedQuestions},#{remark})
+    </insert>
+</mapper>
